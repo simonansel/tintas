@@ -1,12 +1,12 @@
 "use strict";
 
-Tintas.State = {VACANT: 0, ONE_PIECE: 1, STACK: 2, FULL_STACK: 3};
+Tintas.State = ["VACANT", "PLAYER", "PIECE"];
 
 Tintas.Columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 Tintas.Lines = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 Tintas.Intersection = function (c, l) {
-    var private_column, private_line, private_representation;
+    var private_column, private_line, private_representation, private_piece, private_state;
 
     var private_not_valid_positions = [
         "A1", "A2", "A3", "A4", "A5", "A6",              "A9",
@@ -35,6 +35,25 @@ Tintas.Intersection = function (c, l) {
 
     this.hash = function() {
          return parseInt(private_column.charCodeAt(0) + "" + private_line, 10);
+    };
+
+    this.get_state = function(){
+        if(private_piece !== undefined ) {
+            return "PIECE";
+        }else{
+            return "VACANT";
+        }
+    };
+
+    this.set_piece = function (p) {
+        private_piece = p;
+    };
+
+    this.get_color = function () {
+        if (private_piece === undefined){
+            return undefined;
+        }
+        return private_piece.get_color_name();
     };
 
     init(c, l);

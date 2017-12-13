@@ -1,6 +1,6 @@
 'use strict';
 
-var TintasTestCase = TestCase("TintasTestCase");
+var TintasTestCase = TestCase("TintasIntersectionTestCase");
 
 TintasTestCase.prototype.testValid = function() {
     var intersection = new Tintas.Intersection("A", 7);
@@ -23,4 +23,13 @@ TintasTestCase.prototype.testNumberValid = function () {
         }
     }
     assertTrue(count === 49);
+};
+
+TintasTestCase.prototype.testSetPiece = function () {
+    var piece = new Tintas.Piece("BLUE");
+    var intersection = new Tintas.Intersection("A", 7);
+    assertTrue((intersection.get_color() === undefined) === true);
+    intersection.set_piece(piece);
+    assertTrue((intersection.get_state() === "PIECE") === true);
+    assertTrue((intersection.get_color() === "BLUE") === true);
 };
