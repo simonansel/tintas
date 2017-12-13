@@ -1,6 +1,6 @@
 "use strict";
 
-Tintas.Colors = {RED : 1, BLUE : 2, YELLOW : 3, GREEN : 4, WHITE : 5, PURPLE : 6, ORANGE : 7};
+Tintas.Colors = [null, "RED", "BLUE", "YELLOW", "GREEN", "WHITE", "PURPLE", "ORANGE"];
 
 Tintas.Piece = function (c) {
 
@@ -10,8 +10,13 @@ Tintas.Piece = function (c) {
         private_color = c;
     };
 
-    this.get_color = function() {
-        return this.private_color;
+    this.get_color_name = function() {
+        return private_color;
+    };
+
+    this.get_color_value = function() {
+        var value = Tintas.Colors.indexOf(private_color);
+        return value;
     };
 
     init(c);
