@@ -1,4 +1,4 @@
 "use strict";
 
-Lyngk.Coordinates = function (c, l) {
+Tintas.Coordinates = function (c, l) {
 };

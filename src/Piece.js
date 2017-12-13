@@ -1,4 +1,4 @@
 "use strict";
 
-Lyngk.Piece = function (c) {
+Tintas.Piece = function (c) {
 };
