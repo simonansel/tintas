@@ -1,0 +1,2 @@
+// namespace Tintas
+var Tintas = {};
