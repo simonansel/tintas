@@ -1,0 +1,11 @@
+.carousel-caption{
+	position : initial;
+}
+
+.carousel-caption h3{
+	color : black;
+}
+
+.carousel-inner img{
+	display:inline !important;
+}
