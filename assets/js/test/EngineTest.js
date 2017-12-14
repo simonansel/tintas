@@ -30,5 +30,16 @@ TintasTestCase.prototype.testInit = function() {
 TintasTestCase.prototype.testGameEnds = function() {
     var engine = new Tintas.Engine();
     engine.get_players()[0]["RED"] = 7;
-    assertTrue(engine.game_is_over());
+    assertTrue(engine.game_is_over() === true);
+    engine = new  Tintas.Engine();
+    var intersections = engine.get_intersections();
+    for (var c in Tintas.Columns) {
+        for (var l in Tintas.Lines) {
+            var intersection = new Tintas.Intersection(Tintas.Columns[c], Tintas.Lines[l]);
+            if (intersection.is_valid() === true) {
+                intersections[intersection.hash()].unset_piece();
+            }
+        }
+    }
+    assertTrue(engine.game_is_over() === true);
 };

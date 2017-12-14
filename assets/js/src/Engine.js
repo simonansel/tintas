@@ -4,7 +4,7 @@
 Tintas.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Tintas.Engine = function () {
-    var private_pieces, private_current_position, private_turn, private_players, previous_color;
+    var private_pieces, private_current_position, private_turn, private_players, private_previous_color;
     var private_intersections = [];
 
     this.get_intersections = function(){
@@ -68,9 +68,11 @@ Tintas.Engine = function () {
     var no_pieces_left = function () {
         for (var c in Tintas.Columns) {
             for (var l in Tintas.Lines) {
-                var hash = Tintas.Columns[c] + Tintas.Lines[l];
-                if (private_intersections[hash].get_state() === "VACANT") {
-                    return false;
+                var intersection = new Tintas.Intersection(Tintas.Columns[c], Tintas.Lines[l]);
+                if (intersection.is_valid() === true){
+                    if (private_intersections[intersection.hash()].get_state() === "PIECE") {
+                        return false;
+                    }
                 }
             }
         }
