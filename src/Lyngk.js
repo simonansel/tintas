@@ -1,2 +1,0 @@
-// namespace Lyngk
-var Lyngk = {};
