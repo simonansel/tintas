@@ -10,15 +10,25 @@ TintasTestCase.prototype.testInit = function() {
     }
     var engine = new Tintas.Engine();
     var intersections = engine.get_intersections();
-    for (var c in Tintas.Colors) {
+    for (var c in Tintas.Columns) {
+        var line = "";
         for (var l in Tintas.Lines) {
-            var intersection = new Tintas.Intersection(Tintas.Colors[c], Tintas.Lines[l]);
+            var intersection = new Tintas.Intersection(Tintas.Columns[c], Tintas.Lines[l]);
             if (intersection.is_valid()){
-                color_count[intersections[intersection.hash()].get_color()] += 1
+                var i = intersections[intersection.hash()];
+                var co = i.get_color();
+                color_count[co] += 1;
             }
         }
     }
     for (var c in color_count){
-        assertEqual();
+        assertTrue((color_count[c] === 7) === true);
     }
+};
+
+
+TintasTestCase.prototype.testGameEnds = function() {
+    var engine = new Tintas.Engine();
+    engine.get_players()[0]["RED"] = 7;
+    assertTrue(engine.game_is_over());
 };

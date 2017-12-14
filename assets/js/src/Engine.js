@@ -4,7 +4,7 @@
 Tintas.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Tintas.Engine = function () {
-    var private_pieces, private_current_position, private_turn, private_players;
+    var private_pieces, private_current_position, private_turn, private_players, previous_color;
     var private_intersections = [];
 
     this.get_intersections = function(){
@@ -80,6 +80,10 @@ Tintas.Engine = function () {
 
     this.game_is_over = function() {
         return (seven_pieces_collected() || no_pieces_left());
+    };
+
+    this.get_players = function() {
+        return private_players;
     };
 
 
