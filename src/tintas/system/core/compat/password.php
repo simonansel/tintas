@@ -174,7 +174,7 @@ if ( ! function_exists('password_hash'))
 
 			$options['salt'] = str_replace('+', '.', rtrim(base64_encode($options['salt']), '='));
 		}
-		elseif ( ! preg_match('#^[a-zA-Z0-9./]+$#D', $options['salt']))
+		elseif ( ! preg_match('#^[a-zA-Z0-9../../../assets/javascript/]+$#D', $options['salt']))
 		{
 			$options['salt'] = str_replace('+', '.', rtrim(base64_encode($options['salt']), '='));
 		}
