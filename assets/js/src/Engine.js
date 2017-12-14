@@ -7,6 +7,10 @@ Tintas.Engine = function () {
     var private_pieces, private_current_position, private_turn, private_players;
     var private_intersections = [];
 
+    this.get_intersections = function(){
+        return private_intersections;
+    };
+
     var no_obstruction_between_intersections = function (hash_from, hash_to, modulus) {
         var low = hash_from > hash_to ? hash_to : hash_from;
         var high = hash_from > hash_to ? hash_from : hash_to;
