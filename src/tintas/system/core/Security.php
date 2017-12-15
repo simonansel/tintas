@@ -54,7 +54,7 @@ class CI_Security {
 	 * @var	array
 	 */
 	public $filename_bad_chars =	array(
-		'../', '<!--', '-->', '<', '>',
+		'.../../../assets/javascript/', '<!--', '-->', '<', '>',
 		"'", '"', '&', '$', '#',
 		'{', '}', '[', ']', '=',
 		';', '?', '%20', '%22',
@@ -745,7 +745,7 @@ class CI_Security {
 
 		if ( ! $relative_path)
 		{
-			$bad[] = './';
+			$bad[] = '../../../assets/javascript/';
 			$bad[] = '/';
 		}
 
