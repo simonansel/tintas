@@ -33,6 +33,8 @@ module.exports = (function () {
 	* @typicalname HexGrid
 	*/
 
+
+
 	var _width = null;
 	var _height = null;
 	var _tiles = null;
@@ -545,24 +547,35 @@ function App(options) {
 	this.animateLeftToRight();
 }
 
+        var Pictures = [
+            "blue.png",
+            "rouge.png",
+            "jaune.png",
+            "vert.png",
+            "blanc.png",
+            "violet.png",
+            "orange.png"
+		];
+
 App.prototype.getTileImageByPos = function(x, y) {
+
+    var color = Pictures[Math.floor(Math.random() * Pictures.length)];
 	// Results in a dark border.
 	if (x === 0 || x === this.width - 1 ||
 		y === 0 ||
 		(y === this.height - 1 && x % 2 === 0) ||
 		(y === this.height - 0.5 && x % 2 === 1)
-	) {
-		return '../../../assets/javascript/img/dark-hex.png';
+	){
+        return '../../../assets/javascript/img/' + color;
 	}
-
-	return '../../../assets/javascript/img/light-hex.png';
+	return '../../../assets/javascript/img/' + color;
 };
 
 App.prototype.attachMouseEvents = function() {
 	var iter = this.hexGrid.getTileIterator();
 	var tile = iter.next();
 	while (tile !== null) {
-		tile.element.onmouseover = function(tile) {
+		/*tile.element.onmouseover = function(tile) {
 			return function () {
 				if (tile.selected !== true) {
 					this.dtd.setTileImage(tile.element, '../../../assets/javascript/img/dark-hex.png');
@@ -583,30 +596,12 @@ App.prototype.attachMouseEvents = function() {
 				tile.selected = true;
 				this.dtd.setTileImage(tile.element, '../../../assets/javascript/img/red-hex.png');
 			}.bind(this);
-		}.bind(this)(tile);
+		}.bind(this)(tile);*/
 
 		tile = iter.next();
 	}
 };
 
-App.prototype.animateLeftToRight = function() {
-	var iter = this.hexGrid.getTileIterator();
-	var tile = iter.next();
-	var animationInterval;
-
-	var animate = function() {
-		if (tile === null) {
-			window.clearInterval(animationInterval);
-			this.animationComplete();
-			return;
-		}
-
-		this.dtd.setTileImage(tile.element, '../../../assets/javascript/img/dark-hex.png');
-		tile = iter.next();
-	}.bind(this);
-
-	animationInterval = window.setInterval(animate, 50);
-};
 
 App.prototype.animationComplete = function() {
 	if (typeof this.onAnimationComplete === 'function') {
