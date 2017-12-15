@@ -33,3 +33,12 @@ TintasTestCase.prototype.testSetPiece = function () {
     assertTrue((intersection.get_state() === "PIECE") === true);
     assertTrue((intersection.get_color() === "BLUE") === true);
 };
+
+TintasTestCase.prototype.testUnsetPiece = function (){
+    var piece = new Tintas.Piece("BLUE");
+    var intersection = new Tintas.Intersection("A", 7);
+    intersection.set_piece(piece);
+    assertTrue((intersection.get_state() === "PIECE" ) === true);
+    intersection.unset_piece();
+    assertTrue((intersection.get_state() === "VACANT" ) === true);
+};

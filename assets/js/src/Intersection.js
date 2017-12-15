@@ -54,5 +54,9 @@ Tintas.Intersection = function (c, l) {
         return private_piece.get_color_name();
     };
 
+    this.unset_piece = function() {
+        private_piece = undefined;
+    };
+
     init(c, l);
 };
