@@ -85,6 +85,14 @@ class Users extends CI_Model
         );
 
         $this->db->insert('users', $data);
+        $userId = $this->db->insert_id();
+        $dataScore = array(
+            'userId' => $userId,
+            'nbPlayed' => 0,
+            'nbWin' => 0,
+            'nbDraw' => 0
+        );
+        $this->db->insert('statistiques', $dataScore);
     }
 
     public function update()
