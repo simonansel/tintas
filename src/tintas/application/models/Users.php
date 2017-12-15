@@ -103,6 +103,6 @@ class Users extends CI_Model
     {
         $this->db->set('pass', hash('sha256', $this->input->post('newPassword')));
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('users'); 
+        $this->db->update('users');
     }
 }
