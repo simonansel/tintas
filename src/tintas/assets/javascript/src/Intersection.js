@@ -49,7 +49,7 @@ Tintas.Intersection = function (c, l) {
 
     this.get_color = function () {
         if (private_piece === undefined){
-            return undefined;
+            return "NONE";
         }
         return private_piece.get_color_name();
     };

@@ -35,6 +35,24 @@ Tintas.Engine = function () {
         )
     };
 
+    this.get_pictures_positions = function() {
+        var pictures_positions = [];
+        for (var c in Tintas.Columns) {
+            var column = Tintas.Columns[c];
+            for (var c in Tintas.Columns) {
+                var line = Tintas.Lines[l];
+                var intersection = Tintas.Intersection(column, line);
+                if (intersection.is_valid()) {
+                    pictures_positions.push(Tintas.Pictures[intersection.get_color()]);
+                }
+                else {
+                    pictures_positions.push(null);
+                }
+            }
+        }
+        return pictures_positions;
+    };
+
     var get_adjacent_filled_intersections = function() {
         var adjacent_intersections = [];
         var directions = [-10, -9, -1, 1, 9, 10];

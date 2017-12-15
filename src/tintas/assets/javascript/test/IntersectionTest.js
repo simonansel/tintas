@@ -28,7 +28,7 @@ TintasTestCase.prototype.testNumberValid = function () {
 TintasTestCase.prototype.testSetPiece = function () {
     var piece = new Tintas.Piece("BLUE");
     var intersection = new Tintas.Intersection("A", 7);
-    assertTrue((intersection.get_color() === undefined) === true);
+    assertTrue((intersection.get_color() === "NONE") === true);
     intersection.set_piece(piece);
     assertTrue((intersection.get_state() === "PIECE") === true);
     assertTrue((intersection.get_color() === "BLUE") === true);
