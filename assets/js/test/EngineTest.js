@@ -29,6 +29,7 @@ TintasTestCase.prototype.testInit = function() {
 
 TintasTestCase.prototype.testGameEnds = function() {
     var engine = new Tintas.Engine();
+    assertTrue(engine.game_is_over() === false);
     engine.get_players()[0]["RED"] = 7;
     assertTrue(engine.game_is_over() === true);
     engine = new  Tintas.Engine();
@@ -42,4 +43,12 @@ TintasTestCase.prototype.testGameEnds = function() {
         }
     }
     assertTrue(engine.game_is_over() === true);
+};
+
+TintasTestCase.prototype.testGameMechanics = function() {
+    var engine = new Tintas.Engine();
+    assertTrue(engine.get_turn() === 0);
+    var moves = engine.get_valid_moves();
+    assertTrue(moves.length === 49);
+    assertTrue(engine.game_is_over() === false);
 };

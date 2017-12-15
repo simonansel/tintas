@@ -11,44 +11,93 @@ Tintas.Engine = function () {
         return private_intersections;
     };
 
-    var no_obstruction_between_intersections = function (hash_from, hash_to, modulus) {
-        var low = hash_from > hash_to ? hash_to : hash_from;
-        var high = hash_from > hash_to ? hash_from : hash_to;
-        for (var i = low; i < high; i += modulus) {
-            if (private_intersections.state === "PIECE") {
-                return false;
-            }
-        }
-        return true;
+    var first_turn = function() {
+        return private_previous_color === undefined;
     };
 
-    var same_line_without_obstructton = function(hash_from, hash_to){
-        var modulus = [1, 9, 10];
-        for (var m in modulus){
-            if ((hash_from - hash_to) % modulus[m] === 0){
-                return no_obstruction_between_intersections(hash_from, hash_to, modulus[m]);
-            }
-        }
-        return false;
+    var same_color = function(hash) {
+        return private_intersections[hash].get_color() === private_previous_color;
     };
 
-    var move_is_valid = function(hash_from, hash_to) {
+    var piece_in_da_place = function(hash) {
+        return private_intersections[hash].get_state() === "PIECE";
+    };
+
+    var target_is_valid = function(hash) {
+        return private_intersections[hash].is_valid();
+    };
+
+    var move_is_valid = function(hash_to) {
         return (
-            same_line_without_obstructton(hash_from, hash_to) ||
-            neighbours(hash_from, hash_to));
+            piece_in_da_place(hash_to) && target_is_valid(hash_to) && (
+                first_turn() || same_color(hash_to)
+            )
+        )
     };
 
-    this.get_valid_moves = function() {
+    var get_adjacent_filled_intersections = function() {
+        var adjacent_intersections = [];
+        var directions = [-10, -9, -1, 1, 9, 10];
+        for (var d in directions) {
+            var direction = directions[d];
+            var next = private_intersections[private_current_position + direction];
+            while(next !== undefined) {
+                if(next.state() !== "VACANT") {
+                    adjacent_intersections.push(next);
+                    next += direction;
+                }
+            }
+        }
+        return adjacent_intersections;
+    };
+
+    var get_all_valid_intersections = function() {
         var valid_moves = [];
         for (var c in Tintas.Columns){
-            for (var l in Tintas.Lines) {
-                var hash = Tintas.Columns[c] + Tintas.Lines[l];
-                if (move_is_valid(private_current_position, hash)) {
-                    valid_moves.push(hash);
+            var column = Tintas.Columns[c];
+            for (var l in Tintas.Lines){
+                var line = Tintas.Lines[l];
+                var intersection = new Tintas.Intersection(column, line);
+                if (intersection.is_valid()){
+                    valid_moves.push(intersection.hash());
                 }
             }
         }
         return valid_moves;
+    };
+
+    this.get_valid_moves = function() {
+        var valid_moves = [];
+        var adjacent_intersections = get_adjacent_filled_intersections();
+        if (private_turn === 0){
+            valid_moves = get_all_valid_intersections();
+        }
+        else {
+            for (var i in adjacent_intersections) {
+                var hash = adjacent_intersections[i];
+                if (move_is_valid(private_current_position, hash)) {
+                    valid_moves.push(hash);
+                }
+            }
+            if (valid_moves.length === 0 && this.game_is_over() === false) {
+                valid_moves = get_all_valid_intersections();
+            }
+        }
+        return valid_moves;
+    };
+
+    this.move = function(hash_to) {
+        var valid_moves = this.get_valid_moves();
+        if (valid_moves.indexOf(hash_to) > -1){
+            var player = private_players[private_turn % 2];
+            var intersection = private_intersections[hash_to];
+            var color = intersection.get_color();
+            player[color] += 1;
+            intersection.unset_piece();
+            private_previous_color = color;
+            return true;
+        }
+        return false;
     };
 
 
@@ -84,6 +133,30 @@ Tintas.Engine = function () {
         return (seven_pieces_collected() || no_pieces_left());
     };
 
+    this.first_turn_ended = function () {
+        return ((private_turn === 0) && (private_current_position !== undefined));
+    };
+
+    this.no_accessible_colors_left = function() {
+        var moves = this.get_valid_moves();
+        for (var m in moves){
+            var hash =  moves[m];
+            if (private_intersections[hash].get_color() === private_previous_color){
+                return false;
+            }
+        }
+        return true;
+    };
+
+    this.turn_is_over = function() {
+        return (this.first_turn_ended() || this.no_accessible_colors_left());
+    };
+
+    this.next_turn = function() {
+        private_previous_color = undefined;
+        private_turn += 1;
+    };
+
     this.get_players = function() {
         return private_players;
     };
@@ -93,9 +166,7 @@ Tintas.Engine = function () {
         var colors = {};
         for (var c in Tintas.Colors){
             var color = Tintas.Colors[c];
-            if (color !== null){
-                colors[color] = 7;
-            }
+            colors[color] = 7;
         }
         return colors;
     };
@@ -104,11 +175,13 @@ Tintas.Engine = function () {
         var count = {};
         for (var c in Tintas.Colors) {
             var color = Tintas.Colors[c];
-            if ( color !== null ){
-                count[color] = 0;
-            }
+            count[color] = 0;
         }
         return count;
+    };
+
+    this.get_turn = function() {
+        return private_turn;
     };
 
     var generate_players = function() {
