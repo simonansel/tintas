@@ -1,0 +1,14 @@
+.panel{
+	margin-left:20px;
+	padding-right:0px;
+	padding-left: 0px;
+}
+
+.panel-body img{
+	display:inline !important;
+}
+
+.panel-footer p{
+	font-size: 30px;
+	font-weight: bold;
+}

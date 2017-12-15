@@ -1,0 +1,8 @@
+.prix{
+	display:flex;
+	justify-content: flex-end;
+}
+
+.item a{
+	text-decoration-style: none;
+}
