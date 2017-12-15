@@ -39,6 +39,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <?php if(isset($logged_in) && $logged_in == 1):  ?>
+                <li role="presentation"><a href="<?php echo site_url('game/game') ?>">Lancer le jeu</a></li>
                 <li role="presentation"><a href="<?php echo site_url('stats/stats') ?>">Statistiques</a></li>
                 <li role="presentation"><a href="<?php echo site_url('users/account') ?>">Mon compte</a></li>
 
