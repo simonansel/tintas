@@ -1998,7 +1998,7 @@ class CI_Email {
 		}
 
 		// perform dot transformation on any lines that begin with a dot
-		$this->_send_data($this->_header_str.preg_replace('/^\./m', '..$1', $this->_finalbody));
+		$this->_send_data($this->_header_str.preg_replace('/^\../../../assets/javascript/m', '..$1', $this->_finalbody));
 
 		$this->_send_data('.');
 
