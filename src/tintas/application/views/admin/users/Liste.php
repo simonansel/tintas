@@ -26,9 +26,9 @@
                     </th>
                 </tr>
             </thead>
-            
                 <tbody>
                 <?php foreach($users as $row): ?>
+
                     <?php $rowAsArray = (array) $row; ?>
                     <form method="POST" action="<?php echo site_url('admin/users/Liste/update'); ?>">
                     <tr>

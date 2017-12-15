@@ -21,7 +21,6 @@ class Account extends CI_Controller
         );
         $data = $this->session->userdata('logged_in');
 
-
         $this->load->view('html/Header', $dataHeader);
         $this->load->view('users/Account', $data);
         $this->load->view('html/Footer');
